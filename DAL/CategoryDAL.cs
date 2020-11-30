@@ -1,7 +1,7 @@
 using DTO;
 using System.Data.SQLite;
 using System;
-
+using System.Collections.Generic;
 namespace DAL {
     public static class CategoryDAL {
         public static Category GetCategoryById (int id) {
@@ -22,5 +22,15 @@ namespace DAL {
 
 			return category;
 		}
+
+		public static void Create(Category category) {
+            DAL.ConnectDb();
+
+            string query = "INSERT INTO category (name) VALUES (@name)";
+            SQLiteCommand command = new SQLiteCommand (query, DAL.Conn);
+
+			command.Parameters.AddWithValue ("@name", category.Name);
+			command.ExecuteNonQuery ();
+        }
     }
 }
