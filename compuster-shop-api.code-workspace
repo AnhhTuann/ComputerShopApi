@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "BLL"
+		},
+		{
+			"path": "DAL"
+		},
+		{
+			"path": "DTO"
+		},
+		{
+			"path": "API"
+		}
+	]
+}
