@@ -6,7 +6,7 @@ using BLL;
 namespace API.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("/api/[controller]")]
 	public class CategoryController : ControllerBase
 	{
 		private CategoryBLL service = new CategoryBLL();
