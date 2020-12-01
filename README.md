@@ -9,12 +9,12 @@
 ```json
 [
     {
-        id: 1,
-        name: "CPU"
+        "id": 1,
+        "name": "CPU"
     },
     {
-        id: 2,
-        name: "RAM"
+        "id": 2,
+        "name": "RAM"
     }
 ]
 ```
@@ -29,8 +29,8 @@
 
 ```json
 {
-    id: 1,
-    name: "CPU"
+    "id": 1,
+    "name": "CPU"
 }
 ```
 
@@ -44,7 +44,7 @@
 
 ```json
 {
-    name: "Mainboard"
+    "name": "Mainboard"
 }
 ```
 
@@ -74,8 +74,6 @@
 
 ---
 
-
-
 `POST /api/product`
 
 > Create new category object
@@ -87,5 +85,3 @@
 ```
 
 ---
-
-
