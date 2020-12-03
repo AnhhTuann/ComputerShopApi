@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using BLL;
-using System.IO;
 
 namespace API.Controllers
 {
@@ -11,18 +9,11 @@ namespace API.Controllers
 	{
 		private ImageBLL service = new ImageBLL();
 
-		[HttpPost]
-		public void UploadImage([FromForm] IFormFile image)
+		[HttpGet]
+		[Route("{name}")]
+		public FileContentResult Get(string name)
 		{
-			byte[] file;
-
-			using (MemoryStream memoryStream = new MemoryStream())
-			{
-				image.CopyTo(memoryStream);
-				file = memoryStream.ToArray();
-			}
-
-			service.UploadImage(file, "test");
+			return File(service.Get(name), "image/png");
 		}
 	}
 }

@@ -70,5 +70,22 @@ namespace DAL
 			command.Parameters.AddWithValue("@image", product.Image);
 			command.ExecuteNonQuery();
 		}
+
+		public static void Update(Product product)
+		{
+			DAL.ConnectDb();
+
+			string query = "UPDATE product SET name = @name, description = @description, @price = price, categoryId = @categoryId, amount = @amount, image = @image WHERE id = @id";
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+
+			command.Parameters.AddWithValue("@id", product.Id);
+			command.Parameters.AddWithValue("@name", product.Name);
+			command.Parameters.AddWithValue("@description", product.Description);
+			command.Parameters.AddWithValue("@price", product.Price);
+			command.Parameters.AddWithValue("@categoryId", product.Category.Id);
+			command.Parameters.AddWithValue("@amount", product.Amount);
+			command.Parameters.AddWithValue("@image", product.Image);
+			command.ExecuteNonQuery();
+		}
 	}
 }

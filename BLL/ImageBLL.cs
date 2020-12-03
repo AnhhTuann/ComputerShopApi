@@ -4,9 +4,14 @@ namespace BLL
 {
 	public class ImageBLL
 	{
-		public void UploadImage(byte[] file, string name)
+		public byte[] Get(string name)
 		{
-			ImageDAL.UploadImage(file, name);
+			return ImageDAL.Get(name);
+		}
+
+		public void Upload(byte[] file, string name)
+		{
+			ImageDAL.Upload(file, name);
 		}
 	}
 }
