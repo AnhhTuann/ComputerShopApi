@@ -32,9 +32,9 @@ namespace API.Controllers
 			}
 
 			product.Image = System.Guid.NewGuid().ToString();
-			imageService.UploadImage(file, product.Image);
+			imageService.Upload(file, product.Image);
 
-			return productService.Create(product);;
+			return productService.Create(product); ;
 		}
 	}
 }
