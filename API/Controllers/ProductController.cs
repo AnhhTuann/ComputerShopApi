@@ -11,31 +11,30 @@ namespace API.Controllers
 	[Route("/api/[controller]")]
 	public class ProductController : ControllerBase
 	{
-		private ProductBLL service = new ProductBLL();
+		private ProductBLL productService = new ProductBLL();
 		private ImageBLL imageService = new ImageBLL();
 
 		[HttpGet]
 		public IEnumerable<Product> GetAll()
 		{
-			return service.GetAll();
+			return productService.GetAll();
 		}
 
 		[HttpPost]
-		public int Create([FromForm] Product product, [FromForm] IFormFile image)
+		public int Create([FromForm] Product product, [FromForm] IFormFile productImage)
 		{
-			int productId = service.Create(product);
 			byte[] file;
 
 			using (MemoryStream memoryStream = new MemoryStream())
 			{
-				image.CopyTo(memoryStream);
+				productImage.CopyTo(memoryStream);
 				file = memoryStream.ToArray();
 			}
 
-			product.Image = $"img_{productId}_{product.Name}";
+			product.Image = System.Guid.NewGuid().ToString();
 			imageService.UploadImage(file, product.Image);
 
-			return productId;
+			return productService.Create(product);;
 		}
 	}
 }
