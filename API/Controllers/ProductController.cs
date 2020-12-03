@@ -1,7 +1,10 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System;
 using DTO;
 using BLL;
+using System.IO;
 
 namespace API.Controllers
 {
@@ -10,6 +13,7 @@ namespace API.Controllers
 	public class ProductController : ControllerBase
 	{
 		private ProductBLL service = new ProductBLL();
+		private ImageBLL imageService = new ImageBLL();
 
 		[HttpGet]
 		public IEnumerable<Product> GetAll()
@@ -18,9 +22,21 @@ namespace API.Controllers
 		}
 
 		[HttpPost]
-		public int Create(Product product)
+		public int Create([FromForm] Product product, [FromForm] IFormFile image)
 		{
-			return service.Create(product);
+			int productId = service.Create(product);
+			byte[] file;
+
+			using (MemoryStream memoryStream = new MemoryStream())
+			{
+				image.CopyTo(memoryStream);
+				file = memoryStream.ToArray();
+			}
+
+			product.Image = $"img_{productId}_{product.Name}";
+			imageService.UploadImage(file, product.Image);
+
+			return productId;
 		}
 	}
 }

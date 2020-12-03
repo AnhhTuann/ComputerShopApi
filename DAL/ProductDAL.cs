@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using DTO;
 
 namespace DAL
@@ -41,6 +42,7 @@ namespace DAL
 					product.Amount = reader.GetInt32(4);
 					product.Category =
 							CategoryDAL.GetById(reader.GetInt32(5));
+					product.Image = reader.GetString(6);
 					data.Add(product);
 				}
 
@@ -55,7 +57,7 @@ namespace DAL
 			DAL.ConnectDb();
 
 			string query =
-					"INSERT INTO product (name, description, price, amount, categoryId) VALUES (@name, @description, @price, @amount, @categoryId)";
+					"INSERT INTO product (name, description, price, amount, categoryId, image) VALUES (@name, @description, @price, @amount, @categoryId, @image)";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
 			command.Parameters.AddWithValue("@name", product.Name);
@@ -65,6 +67,7 @@ namespace DAL
 			command.Parameters.AddWithValue("@price", product.Price);
 			command.Parameters.AddWithValue("@amount", product.Amount);
 			command.Parameters.AddWithValue("@categoryId", product.Category.Id);
+			command.Parameters.AddWithValue("@image", product.Image);
 			command.ExecuteNonQuery();
 		}
 	}
