@@ -43,7 +43,7 @@ namespace DAL
 			DAL.ConnectDb();
 
 			Product product = new Product();
-			string query = "SELECT * FROM category WHERE id = @id";
+			string query = "SELECT * FROM product WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
 			command.Parameters.AddWithValue("@id", id);
@@ -91,7 +91,7 @@ namespace DAL
 		{
 			DAL.ConnectDb();
 
-			string query = "UPDATE product SET name = @name, description = @description, @price = price, categoryId = @categoryId, amount = @amount, image = @image WHERE id = @id";
+			string query = "UPDATE product SET name = @name, description = @description, price = @price, categoryId = @categoryId, amount = @amount, image = @image WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
 			command.Parameters.AddWithValue("@id", product.Id);

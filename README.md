@@ -48,6 +48,16 @@
 }
 ```
 
+**Response:**
+
+A newly created object `id`
+
+```json
+1
+```
+
+
+
 ---
 
 `GET /api/product`
@@ -110,11 +120,41 @@
 
 `POST /api/product`
 
-> Create new category object
+> Create new product
 
 **Body:**
 
 Using `Multipart Form Data`
+
+**Response:**
+
+A newly created object `id`
+
+```json
+1
+```
+
+---
+
+`PUT /api/product`
+
+> Update product information
+
+**Body:**
+
+```json
+{
+    "id": 1,
+    "name": "AMD RX550",
+    "price": 1000,
+    "amount": 5,
+    "category": {
+        "id": 1,
+        "name": "VGA",
+    },
+    "image": "741aqwd54dqw"
+}
+```
 
 ---
 
@@ -205,12 +245,122 @@ Using `Multipart Form Data`
 
 `POST /api/storage`
 
-> Create new import/export ticket and also alter the amount of the specified product.
+> Create new import/export ticket and also alter the amount of the specified product
 
 **Body:**
 
 ```json
 // updating...
+```
+
+**Response:**
+
+A newly created object `id`
+
+```json
+1
+```
+
+---
+
+`POST /api/customer`
+
+> Create new customer account
+
+**Body:**
+
+```json
+{
+    "name": "Phan Dung Tri",
+    "email": "phandungtri@email.com",
+    "password": "Abcd1234",
+    "address": "HCMC",
+    "phone": "0326123456"
+}
+```
+
+**Response:**
+
+A newly created object `id`
+
+```json
+1
+```
+
+---
+
+`GET /api/customer`
+
+> Get all information of customers
+
+**Response:**
+
+```json
+[
+    {
+        "name": "Phan Dung Tri",
+        "email": "phandungtri@email.com",
+        "password": "Iamhashed",
+        "address": "HCMC",
+        "phone": "0326123456"
+    },
+    {
+        "name": "Nguyen Quoc Vu",
+        "email": "quocvu@email.com",
+        "password": "Iamhashed",
+        "address": "HCMC",
+        "phone": "0123456789"
+    }
+]
+```
+
+
+
+---
+
+`GET /api/customer/:id`
+
+> Get information of customer by `id`
+
+**Response:**
+
+```json
+{
+    "name": "Phan Dung Tri",
+    "email": "phandungtri@email.com",
+    "password": "Abcd1234",
+    "address": "HCMC",
+    "phone": "0326123456"
+}
+```
+
+---
+
+`POST /api/login/customer`
+
+> Perform a login action for a customer account
+
+**Body:**
+
+```json
+{
+    "email": "abcd@email.com",
+    "password": "Abcd1234"
+}
+```
+
+**Response:**
+
+The information of logged in account
+
+```json
+{
+    "name": "Phan Dung Tri",
+    "email": "phandungtri@email.com",
+    "password": "Iamhashed",
+    "address": "HCMC",
+    "phone": "0326123456"
+}
 ```
 
 ---

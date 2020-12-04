@@ -20,6 +20,13 @@ namespace API.Controllers
 			return productService.GetAll();
 		}
 
+		[HttpGet]
+		[Route("{id}")]
+		public Product GetById(int id)
+		{
+			return productService.GetById(id);
+		}
+
 		[HttpPost]
 		public int Create([FromForm] Product product, [FromForm] IFormFile productImage)
 		{
@@ -34,7 +41,13 @@ namespace API.Controllers
 			product.Image = System.Guid.NewGuid().ToString();
 			imageService.Upload(file, product.Image);
 
-			return productService.Create(product); ;
+			return productService.Create(product);
+		}
+
+		[HttpPut]
+		public void Update(Product product)
+		{
+			productService.Update(product);
 		}
 	}
 }
