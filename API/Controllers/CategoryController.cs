@@ -24,9 +24,9 @@ namespace API.Controllers
 		}
 
 		[HttpPost]
-		public void Create(Category category)
+		public int Create(Category category)
 		{
-			service.Create(category);
+			return service.Create(category);
 		}
 	}
 }

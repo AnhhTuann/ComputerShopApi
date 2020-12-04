@@ -8,5 +8,19 @@ namespace DAL {
             Conn = new SQLiteConnection (connectionStr);
             Conn.Open ();
         }
+
+        public static int GetLastRowIndex(string table)
+		{
+			DAL.ConnectDb();
+
+			string query = "SELECT MAX(id) FROM " + table;
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+			SQLiteDataReader reader = command.ExecuteReader();
+			int id = 0;
+
+			while (reader.Read()) id = reader.GetInt32(0);
+
+			return id;
+		}
     }
 }

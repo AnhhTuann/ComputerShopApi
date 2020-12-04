@@ -11,10 +11,19 @@ namespace BLL
 			return ProductDAL.GetAll();
 		}
 
+		public Product GetById(int id)
+		{
+			return ProductDAL.GetById(id);
+		}
+
 		public int Create(Product product)
 		{
-			ProductDAL.Create(product);
-			return ProductDAL.GetLastRowIndex();
+			return ProductDAL.Create(product);
+		}
+
+		public void Update(Product product)
+		{
+			ProductDAL.Update(product);
 		}
 	}
 }

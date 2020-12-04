@@ -47,14 +47,14 @@ namespace DAL
 
 			while (reader.Read())
 			{
-				category.Id = Int32.Parse(reader["id"].ToString());
-				category.Name = reader["name"].ToString();
+				category.Id = reader.GetInt32(0);
+				category.Name = reader.GetString(1);
 			}
 
 			return category;
 		}
 
-		public static void Create(Category category)
+		public static int Create(Category category)
 		{
 			DAL.ConnectDb();
 
@@ -63,6 +63,8 @@ namespace DAL
 
 			command.Parameters.AddWithValue("@name", category.Name);
 			command.ExecuteNonQuery();
+
+			return DAL.GetLastRowIndex("category");
 		}
 	}
 }

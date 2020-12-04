@@ -16,9 +16,9 @@ namespace BLL
 			return CategoryDAL.GetById(id);
 		}
 
-		public void Create(Category category)
+		public int Create(Category category)
 		{
-			CategoryDAL.Create(category);
+			return CategoryDAL.Create(category);
 		}
 	}
 }
