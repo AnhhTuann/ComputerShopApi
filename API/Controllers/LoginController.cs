@@ -12,7 +12,7 @@ namespace API.Controllers
 		private CustomerBLL customerService = new CustomerBLL();
 
 		[HttpPost]
-		[Route("/customer")]
+		[Route("customer")]
 		public ActionResult<Person> LoginCustomer(Person customer)
 		{
 			Person authorizedCustomer = customerService.Login(customer);

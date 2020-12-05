@@ -3,6 +3,7 @@ using DTO;
 using DAL;
 using System.Security.Cryptography;
 using System.Text;
+using System;
 
 namespace BLL
 {
@@ -34,6 +35,8 @@ namespace BLL
 			byte[] hashedBytes = md5.ComputeHash(Encoding.ASCII.GetBytes(customer.Password));
 			string hashedPassword = Encoding.ASCII.GetString(hashedBytes);
 			Person information = CustomerDAL.GetByEmail(customer.Email);
+
+			Console.Write(information.Password + "=" + hashedPassword);
 
 			if (information.Password == hashedPassword)
 			{
