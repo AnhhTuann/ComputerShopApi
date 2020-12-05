@@ -20,6 +20,7 @@ namespace API.Controllers
 			if (authorizedCustomer != null)
 			{
 				ActiveCustomer.trackCustomer(authorizedCustomer);
+				Response.Cookies.Append("UserId", authorizedCustomer.Id.ToString());
 				return authorizedCustomer;
 			}
 
