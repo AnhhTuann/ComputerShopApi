@@ -22,10 +22,7 @@ namespace API
 			{
 				options.AddDefaultPolicy(builder =>
 				{
-					builder.AllowAnyOrigin();
-					builder.AllowAnyHeader();
-					builder.AllowAnyMethod();
-					builder.AllowCredentials();
+					builder.WithOrigins("http://localhost:1234").AllowCredentials().AllowAnyHeader().AllowAnyMethod();
 				});
 			});
 
