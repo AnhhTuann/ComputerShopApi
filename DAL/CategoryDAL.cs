@@ -66,5 +66,16 @@ namespace DAL
 
 			return DAL.GetLastRowIndex("category");
 		}
+
+		public static void Update(Category category)
+		{
+			DAL.ConnectDb();
+
+			string query = "UPDATE category SET name = @name WHERE id = @id";
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+
+			command.Parameters.AddWithValue("@name", category.Name);
+			command.ExecuteNonQuery();
+		}
 	}
 }

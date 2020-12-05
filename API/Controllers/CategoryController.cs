@@ -28,5 +28,11 @@ namespace API.Controllers
 		{
 			return service.Create(category);
 		}
+
+		[HttpPut]
+		public void Update(Category category)
+		{
+			service.Update(category);
+		}
 	}
 }

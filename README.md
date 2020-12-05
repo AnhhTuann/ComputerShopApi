@@ -56,6 +56,21 @@ A newly created object `id`
 1
 ```
 
+---
+
+`PUT /api/category`
+
+> Update category object
+
+**Body:**
+
+```json
+{
+    "id": 1,
+    "name": "CPU"
+}
+```
+
 
 
 ---
@@ -313,8 +328,6 @@ A newly created object `id`
     }
 ]
 ```
-
-
 
 ---
 

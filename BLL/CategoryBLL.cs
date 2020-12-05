@@ -20,5 +20,10 @@ namespace BLL
 		{
 			return CategoryDAL.Create(category);
 		}
+
+		public void Update(Category category)
+		{
+			CategoryDAL.Update(category);
+		}
 	}
 }
