@@ -22,7 +22,9 @@ namespace API
 			{
 				options.AddDefaultPolicy(builder =>
 				{
-					builder.WithOrigins("http://localhost:1234").WithMethods("PUT", "GET", "POST", "DELETE", "OPTIONS");
+					builder.AllowAnyOrigin();
+					builder.AllowAnyHeader();
+					builder.AllowAnyMethod();
 				});
 			});
 
