@@ -22,6 +22,8 @@ This file contains description of all of APIs. Please read it carefully.
 | -------- | -------- | ------------------------ |
 | `search` | `string` | Search items by its name |
 
+*Note: with `search` query, DON'T put search string in `""`.*
+
 **Response:**
 
 ```json
