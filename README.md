@@ -152,7 +152,18 @@ A newly created object `id`
 
 **Body:**
 
-Using `Multipart Form Data`
+Using `Multipart Form Data`.
+
+| **key**          | **type** |
+| ---------------- | -------- |
+| `name`           | `string` |
+| `price`          | `number` |
+| `amount`         | `number` |
+| `category[id]`   | `number` |
+| `category[name]` | `string` |
+| `productImage`   | `file`   |
+
+*Note: `category[name]` is optional.*
 
 **Response:**
 
@@ -385,8 +396,250 @@ The information of logged in account
     "email": "phandungtri@email.com",
     "password": "Iamhashed",
     "address": "HCMC",
-    "phone": "0326123456"
+    "phone": "0326123456",
+    "id": 1
 }
 ```
+
+**Cookies:**
+
+| **name** | *description*             |
+| -------- | ------------------------- |
+| `UserId` | `id` of logged in account |
+
+---
+
+`GET /api/combo`
+
+> Get all available combos
+
+**Response:**
+
+```json
+[
+    {
+        "name": "Test combo",
+        "discount": 15,
+        "price": 17.85,
+        "originPrice": 21,
+        "details": [
+            {
+                "product": {
+                    "name": "abcd d",
+                    "amount": 0,
+                    "price": 10,
+                    "description": "qwdqwhioh",
+                    "category": {
+                        "name": "CPU",
+                        "id": 1
+                    },
+                    "image": "acd",
+                    "id": 1
+                },
+                "amount": 1
+            },
+            {
+                "product": {
+                    "name": "mndqwdm wd",
+                    "amount": 0,
+                    "price": 5,
+                    "description": "qwdnqwoi qdwiodn",
+                    "category": {
+                        "name": "CPU",
+                        "id": 1
+                    },
+                    "image": "wdqd",
+                    "id": 2
+                },
+                "amount": 1
+            },
+            {
+                "product": {
+                    "name": "dqwd",
+                    "amount": 0,
+                    "price": 6,
+                    "description": "wger",
+                    "category": {
+                        "name": "CPU",
+                        "id": 1
+                    },
+                    "image": "qwg",
+                    "id": 4
+                },
+                "amount": 1
+            }
+        ],
+        "id": 1
+    },
+    {
+        "name": "Test combo 2",
+        "discount": 15,
+        "price": 17.85,
+        "originPrice": 21,
+        "details": [
+            {
+                "product": {
+                    "name": "abcd d",
+                    "amount": 0,
+                    "price": 10,
+                    "description": "qwdqwhioh",
+                    "category": {
+                        "name": "CPU",
+                        "id": 1
+                    },
+                    "image": "acd",
+                    "id": 1
+                },
+                "amount": 1
+            },
+            {
+                "product": {
+                    "name": "mndqwdm wd",
+                    "amount": 0,
+                    "price": 5,
+                    "description": "qwdnqwoi qdwiodn",
+                    "category": {
+                        "name": "CPU",
+                        "id": 1
+                    },
+                    "image": "wdqd",
+                    "id": 2
+                },
+                "amount": 1
+            }
+        ],
+        "id": 1
+    }
+]
+```
+
+---
+
+`GET /api/combo/:id`
+
+> Get information of combo by its `id`
+
+**Response:**
+
+```json
+{
+    "name": "Test combo",
+    "discount": 15,
+    "price": 17.85,
+    "originPrice": 21,
+    "details": [
+        {
+            "product": {
+                "name": "abcd d",
+                "amount": 0,
+                "price": 10,
+                "description": "qwdqwhioh",
+                "category": {
+                    "name": "CPU",
+                    "id": 1
+                },
+                "image": "acd",
+                "id": 1
+            },
+            "amount": 1
+        },
+        {
+            "product": {
+                "name": "mndqwdm wd",
+                "amount": 0,
+                "price": 5,
+                "description": "qwdnqwoi qdwiodn",
+                "category": {
+                    "name": "CPU",
+                    "id": 1
+                },
+                "image": "wdqd",
+                "id": 2
+            },
+            "amount": 1
+        },
+        {
+            "product": {
+                "name": "dqwd",
+                "amount": 0,
+                "price": 6,
+                "description": "wger",
+                "category": {
+                    "name": "CPU",
+                    "id": 1
+                },
+                "image": "qwg",
+                "id": 4
+            },
+            "amount": 1
+        }
+    ],
+    "id": 1
+}
+```
+
+---
+
+`POST /api/combo`
+
+> Create a new product combo
+
+**Body:**
+
+```json
+{
+    "name": "Test combo",
+    "discount": 15,
+    "details": [
+        {
+            "product": {
+                "name": "abcd d",
+                "amount": 0,
+                "price": 10,
+                "description": "qwdqwhioh",
+                "category": {
+                    "name": "CPU",
+                    "id": 1
+                },
+                "image": "acd",
+                "id": 1
+            },
+            "amount": 1
+        },
+        {
+            "product": {
+                "name": "mndqwdm wd",
+                "amount": 0,
+                "price": 5,
+                "description": "qwdnqwoi qdwiodn",
+                "category": {
+                    "name": "CPU",
+                    "id": 1
+                },
+                "image": "wdqd",
+                "id": 2
+            },
+            "amount": 1
+        },
+        {
+            "product": {
+                "name": "dqwd",
+                "amount": 0,
+                "price": 6,
+                "description": "wger",
+                "category": {
+                    "name": "CPU",
+                    "id": 1
+                },
+                "image": "qwg",
+                "id": 4
+            },
+            "amount": 1
+        }
+    ]
+}
+```
+
+*Note: with `product` property, only its `id` property is required, the other properties can be omitted.*
 
 ---

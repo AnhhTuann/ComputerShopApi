@@ -36,7 +36,7 @@ namespace BLL
 			string hashedPassword = Encoding.ASCII.GetString(hashedBytes);
 			Person information = CustomerDAL.GetByEmail(customer.Email);
 
-			if (information.Password == hashedPassword)
+			if (information != null && information.Password == hashedPassword)
 			{
 				return information;
 			}

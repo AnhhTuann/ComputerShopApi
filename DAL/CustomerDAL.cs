@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using DTO;
+using System;
 
 namespace DAL
 {
@@ -98,7 +99,7 @@ namespace DAL
 			command.Parameters.AddWithValue("@phone", customer.Phone);
 			command.ExecuteNonQuery();
 
-			return DAL.GetLastRowIndex("customer");
+			return Convert.ToInt32(DAL.Conn.LastInsertRowId);
 		}
 
 

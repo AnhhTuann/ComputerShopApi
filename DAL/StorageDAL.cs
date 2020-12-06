@@ -1,6 +1,7 @@
 using DTO;
 using System.Data.SQLite;
 using System.Collections.Generic;
+using System;
 
 namespace DAL
 {
@@ -49,7 +50,7 @@ namespace DAL
 			command.Parameters.AddWithValue("@date", storage.Date);
 			command.ExecuteNonQuery();
 
-			return DAL.GetLastRowIndex("storage");
+			return Convert.ToInt32(DAL.Conn.LastInsertRowId);
 		}
 	}
 }
