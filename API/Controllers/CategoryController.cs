@@ -12,9 +12,9 @@ namespace API.Controllers
 		private CategoryBLL service = new CategoryBLL();
 
 		[HttpGet]
-		public IEnumerable<Category> GetAll()
+		public IEnumerable<Category> GetAll([FromQuery] string search)
 		{
-			return service.GetAll();
+			return service.GetAll(search);
 		}
 
 		[HttpGet("{id}")]

@@ -6,9 +6,9 @@ namespace BLL
 {
 	public class CategoryBLL
 	{
-		public List<Category> GetAll()
+		public List<Category> GetAll(string search)
 		{
-			return CategoryDAL.GetAll();
+			return CategoryDAL.GetAll(search);
 		}
 
 		public Category GetById(int id)

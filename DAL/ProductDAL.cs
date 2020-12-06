@@ -7,12 +7,14 @@ namespace DAL
 {
 	public static class ProductDAL
 	{
-		public static List<Product> GetAll()
+		private static string tableName = "product";
+
+		public static List<Product> GetAll(string search = "")
 		{
 			DAL.ConnectDb();
 
 			List<Product> data = new List<Product>();
-			string query = "SELECT * FROM product";
+			string query = $"SELECT * FROM {tableName} WHERE name LIKE '%{search}%'";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 			SQLiteDataReader reader = command.ExecuteReader();
 
@@ -43,7 +45,7 @@ namespace DAL
 			DAL.ConnectDb();
 
 			Product product = new Product();
-			string query = "SELECT * FROM product WHERE id = @id";
+			string query = $"SELECT * FROM {tableName} WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
 			command.Parameters.AddWithValue("@id", id);
@@ -70,7 +72,7 @@ namespace DAL
 			DAL.ConnectDb();
 
 			string query =
-					"INSERT INTO product (name, description, price, amount, categoryId, image) VALUES (@name, @description, @price, @amount, @categoryId, @image)";
+					$"INSERT INTO {tableName} (name, description, price, amount, categoryId, image) VALUES (@name, @description, @price, @amount, @categoryId, @image)";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
 			command.Parameters.AddWithValue("@name", product.Name);
@@ -91,7 +93,7 @@ namespace DAL
 		{
 			DAL.ConnectDb();
 
-			string query = "UPDATE product SET name = @name, description = @description, price = @price, categoryId = @categoryId, amount = @amount, image = @image WHERE id = @id";
+			string query = $"UPDATE {tableName} SET name = @name, description = @description, price = @price, categoryId = @categoryId, amount = @amount, image = @image WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
 			command.Parameters.AddWithValue("@id", product.Id);

@@ -4,6 +4,12 @@
 
 > Get all categories
 
+**Queries:**
+
+| **Key**  | **Type** | **Description**          |
+| -------- | -------- | ------------------------ |
+| `search` | `string` | Search items by its name |
+
 **Response:**
 
 ```json
@@ -71,13 +77,17 @@ A newly created object `id`
 }
 ```
 
-
-
 ---
 
 `GET /api/product`
 
 > Get all products
+
+**Queries:**
+
+| **Key**  | **Type** | **Description**          |
+| -------- | -------- | ------------------------ |
+| `search` | `string` | Search items by its name |
 
 **Response:**
 

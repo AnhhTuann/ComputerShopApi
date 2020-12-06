@@ -6,9 +6,9 @@ namespace BLL
 {
 	public class ProductBLL
 	{
-		public List<Product> GetAll()
+		public List<Product> GetAll(string search)
 		{
-			return ProductDAL.GetAll();
+			return ProductDAL.GetAll(search);
 		}
 
 		public Product GetById(int id)

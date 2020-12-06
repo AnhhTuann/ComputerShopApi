@@ -7,12 +7,14 @@ namespace DAL
 {
 	public static class CategoryDAL
 	{
-		public static List<Category> GetAll()
+		private static string tableName = "category";
+
+		public static List<Category> GetAll(string search = "")
 		{
 			DAL.ConnectDb();
 
 			List<Category> data = new List<Category>();
-			string query = "SELECT * FROM category";
+			string query = $"SELECT * FROM {tableName} WHERE name LIKE '%{search}%'";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 			SQLiteDataReader reader = command.ExecuteReader();
 
@@ -38,7 +40,7 @@ namespace DAL
 			DAL.ConnectDb();
 
 			Category category = new Category();
-			string query = "SELECT * FROM category WHERE id = @id";
+			string query = $"SELECT * FROM {tableName} WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
 			command.Parameters.AddWithValue("@id", id);
@@ -58,7 +60,7 @@ namespace DAL
 		{
 			DAL.ConnectDb();
 
-			string query = "INSERT INTO category (name) VALUES (@name)";
+			string query = $"INSERT INTO {tableName} (name) VALUES (@name)";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
 			command.Parameters.AddWithValue("@name", category.Name);
@@ -71,7 +73,7 @@ namespace DAL
 		{
 			DAL.ConnectDb();
 
-			string query = "UPDATE category SET name = @name WHERE id = @id";
+			string query = $"UPDATE {tableName} SET name = @name WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
 			command.Parameters.AddWithValue("@name", category.Name);
