@@ -85,9 +85,12 @@ A newly created object `id`
 
 **Queries:**
 
-| **Key**  | **Type** | **Description**          |
-| -------- | -------- | ------------------------ |
-| `search` | `string` | Search items by its name |
+| **Key**    | **Type** | **Description**                                                            |
+| ---------- | -------- | -------------------------------------------------------------------------- |
+| `search`   | `string` | Search items by its name, in its description and also in its category name |
+| `category` | `number` | Search items by category                                                   |
+| `minPrice` | `number` | Search items by lowest price                                               |
+| `maxPrice` | `number` | Search items by highest price                                              |
 
 **Response:**
 

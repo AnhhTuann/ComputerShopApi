@@ -9,12 +9,26 @@ namespace DAL
 	{
 		private static string tableName = "product";
 
-		public static List<Product> GetAll(string search = "")
+		public static List<Product> GetAll(string search = "", int categoryId = 0, int minPrice = 0, int maxPrice = 0)
 		{
+			string categoryIdCondition = "";
+			string maxPriceCondition = "";
+
+			if (categoryId != 0)
+			{
+				categoryIdCondition = "AND categoryId = " + categoryId;
+			}
+
+			if (maxPrice > 0 && maxPrice >= minPrice)
+			{
+				maxPriceCondition = "AND price <= " + maxPrice;
+			}
+
 			DAL.ConnectDb();
 
 			List<Product> data = new List<Product>();
-			string query = $"SELECT * FROM {tableName} WHERE name LIKE '%{search}%'";
+			string query = $"SELECT * FROM {tableName} JOIN category ON category.id = {tableName}.categoryId WHERE ({tableName}.name LIKE '%{search}%' OR description LIKE '%{search}%' OR category.name LIKE '%{search}%') {categoryIdCondition} AND (price >= {minPrice} {maxPriceCondition})";
+			Console.WriteLine(query);
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 			SQLiteDataReader reader = command.ExecuteReader();
 

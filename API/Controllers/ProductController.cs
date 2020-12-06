@@ -15,9 +15,9 @@ namespace API.Controllers
 		private ImageBLL imageService = new ImageBLL();
 
 		[HttpGet]
-		public IEnumerable<Product> GetAll([FromQuery] string search)
+		public IEnumerable<Product> GetAll([FromQuery] string search, [FromQuery] int category, [FromQuery] int minPrice, [FromQuery] int maxPrice)
 		{
-			return productService.GetAll(search);
+			return productService.GetAll(search, category, minPrice, maxPrice);
 		}
 
 		[HttpGet]
