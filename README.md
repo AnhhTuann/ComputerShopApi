@@ -5,10 +5,25 @@ This file contains description of all of APIs. Please read it carefully.
 # Table of contents
 
 1. [Category](#category)
+   1. [Get All](#get-apicategory)
+   2. [Get By ID](#get-apicategoryid)
+   3. [Create New](#post-apicategory)
+   4. [Update](#put-apicategory)
 2. [Product](#product)
+   1. [Get All](#get-apiproduct)
+   2. [Get By ID](#get-apiproductid)
+   3. [Create New](#post-apitproduct)
+   4. [Update](#put-apiproduct)
 3. [Storage (WIP)](#storage)
 4. [Customer](#customer)
+   1. [Get All](#get-apicustomer)
+   2. [Get By ID](#get-apicustomerid)
+   3. [Register](#post-apicustomer)
+   4. [Login](#get-apilogincustomer)
 5. [Combo](#combo)
+   1. [Get All](#get-apicombo)
+   2. [Get By ID](#get-apicomboid)
+   3. [Create New](#post-apicombo)
 
 # Category
 
