@@ -12,7 +12,7 @@ This file contains description of all of APIs. Please read it carefully.
 
 # Category
 
-`GET /api/category`
+## `GET /api/category`
 
 > Get all categories
 
@@ -39,7 +39,7 @@ This file contains description of all of APIs. Please read it carefully.
 
 ---
 
-`GET /api/category/:id`
+## `GET /api/category/:id`
 
 > Get a category object by its `id`
 
@@ -54,7 +54,7 @@ This file contains description of all of APIs. Please read it carefully.
 
 ---
 
-`POST /api/category`
+## `POST /api/category`
 
 > Create new category object
 
@@ -76,7 +76,7 @@ A newly created object `id`
 
 ---
 
-`PUT /api/category`
+## `PUT /api/category`
 
 > Update category object
 
@@ -93,7 +93,7 @@ A newly created object `id`
 
 # Product
 
-`GET /api/product`
+## `GET /api/product`
 
 > Get all products
 
@@ -140,7 +140,7 @@ A newly created object `id`
 
 ---
 
-`GET /api/product/:id`
+## `GET /api/product/:id`
 
 > Get a product object by its `id`
 
@@ -162,7 +162,7 @@ A newly created object `id`
 
 ---
 
-`POST /api/product`
+## `POST /api/product`
 
 > Create new product
 
@@ -191,7 +191,7 @@ A newly created object `id`
 
 ---
 
-`PUT /api/product`
+## `PUT /api/product`
 
 > Update product information
 
@@ -213,7 +213,7 @@ A newly created object `id`
 
 ---
 
-`GET /api/image/:name`
+## `GET /api/image/:name`
 
 > Using with `<img>` tag to get product image.
 
@@ -227,7 +227,7 @@ A newly created object `id`
 
 **Warning: these APIs haven't been completed yet, don't use them!**
 
-`GET /api/storage/`
+## `GET /api/storage/`
 
 > Get all import/export tickets
 
@@ -274,7 +274,7 @@ A newly created object `id`
 
 ---
 
-`GET /api/storage/:id`
+## `GET /api/storage/:id`
 
 > Get import/export ticket by its `id`
 
@@ -302,7 +302,7 @@ A newly created object `id`
 
 ---
 
-`POST /api/storage`
+## `POST /api/storage`
 
 > Create new import/export ticket and also alter the amount of the specified product
 
@@ -324,7 +324,7 @@ A newly created object `id`
 
 # Customer
 
-`POST /api/customer`
+## `POST /api/customer`
 
 > Create new customer account
 
@@ -350,7 +350,7 @@ A newly created object `id`
 
 ---
 
-`GET /api/customer`
+## `GET /api/customer`
 
 > Get all information of customers
 
@@ -377,7 +377,7 @@ A newly created object `id`
 
 ---
 
-`GET /api/customer/:id`
+## `GET /api/customer/:id`
 
 > Get information of customer by `id`
 
@@ -395,7 +395,7 @@ A newly created object `id`
 
 ---
 
-`POST /api/login/customer`
+## `POST /api/login/customer`
 
 > Perform a login action for a customer account
 
@@ -433,7 +433,7 @@ The information of logged in account
 
 # Combo
 
-`GET /api/combo`
+## `GET /api/combo`
 
 > Get all available combos
 
@@ -539,7 +539,7 @@ The information of logged in account
 
 ---
 
-`GET /api/combo/:id`
+## `GET /api/combo/:id`
 
 > Get information of combo by its `id`
 
@@ -604,7 +604,7 @@ The information of logged in account
 
 ---
 
-`POST /api/combo`
+## `POST /api/combo`
 
 > Create a new product combo
 
