@@ -1,4 +1,16 @@
-## How to use API
+# How to use API
+
+This file contains description of all of APIs. Please read it carefully.
+
+# Table of contents
+
+1. [Category](#category)
+2. [Product](#product)
+3. [Storage (WIP)](#storage)
+4. [Customer](#customer)
+5. [Combo](#combo)
+
+# Category
 
 `GET /api/category`
 
@@ -79,6 +91,8 @@ A newly created object `id`
 
 ---
 
+# Product
+
 `GET /api/product`
 
 > Get all products
@@ -91,6 +105,8 @@ A newly created object `id`
 | `category` | `number` | Search items by category                                                   |
 | `minPrice` | `number` | Search items by lowest price                                               |
 | `maxPrice` | `number` | Search items by highest price                                              |
+
+*Note: with `search` query, DON'T put search string in `""`.*
 
 **Response:**
 
@@ -207,6 +223,10 @@ A newly created object `id`
 
 ---
 
+# Storage
+
+**Warning: these APIs haven't been completed yet, don't use them!**
+
 `GET /api/storage/`
 
 > Get all import/export tickets
@@ -301,6 +321,8 @@ A newly created object `id`
 ```
 
 ---
+
+# Customer
 
 `POST /api/customer`
 
@@ -408,6 +430,8 @@ The information of logged in account
 | `UserId` | `id` of logged in account |
 
 ---
+
+# Combo
 
 `GET /api/combo`
 
