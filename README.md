@@ -19,7 +19,7 @@ This file contains description of all of APIs. Please read it carefully.
    1. [Get All](#get-apicustomer)
    2. [Get By ID](#get-apicustomerid)
    3. [Register](#post-apicustomer)
-   4. [Login](#get-apilogincustomer)
+   4. [Login](#post-apilogincustomer)
 5. [Combo](#combo)
    1. [Get All](#get-apicombo)
    2. [Get By ID](#get-apicomboid)
