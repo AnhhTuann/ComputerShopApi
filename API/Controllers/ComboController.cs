@@ -12,9 +12,9 @@ namespace API.Controllers
 		private ComboBLL service = new ComboBLL();
 
 		[HttpGet]
-		public IEnumerable<Combo> GetAll()
+		public IEnumerable<Combo> GetAll([FromQuery] int contain)
 		{
-			return service.GetAll();
+			return service.GetAll(contain);
 		}
 
 		[HttpGet]

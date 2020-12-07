@@ -442,7 +442,7 @@ The information of logged in account
 
 **Cookies:**
 
-| **name** | *description*             |
+| **name** | **description**           |
 | -------- | ------------------------- |
 | `UserId` | `id` of logged in account |
 
@@ -453,6 +453,12 @@ The information of logged in account
 ## `GET /api/combo`
 
 > Get all available combos
+
+**Queries:**
+
+| **Key**    | **Type** | **Description**                |
+| ---------- | -------- | ------------------------------ |
+| `contain`  | `number` | Search combos that contains id |                                           |
 
 **Response:**
 

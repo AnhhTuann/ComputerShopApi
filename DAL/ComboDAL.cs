@@ -42,12 +42,19 @@ namespace DAL
 			return combo;
 		}
 
-		public static List<Combo> GetAll()
+		public static List<Combo> GetAll(int productId = 0)
 		{
+			string productQuery = "";
+
+			if (productId != 0)
+			{
+				productQuery = $"WHERE {subTable}.productId = {productId}";
+			}
+
 			DAL.ConnectDb();
 
 			List<Combo> data = new List<Combo>();
-			string query = $"SELECT * FROM {table}";
+			string query = $"SELECT * FROM {table} JOIN {subTable} ON {table}.id = {subTable}.comboId {productQuery} GROUP BY {subTable}.comboId";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 			SQLiteDataReader reader = command.ExecuteReader();
 

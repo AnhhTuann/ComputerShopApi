@@ -16,9 +16,9 @@ namespace BLL
 			combo.Price = combo.OriginPrice - (combo.OriginPrice * combo.Discount / 100);
 		}
 
-		public List<Combo> GetAll()
+		public List<Combo> GetAll(int productId)
 		{
-			List<Combo> list = ComboDAL.GetAll();
+			List<Combo> list = ComboDAL.GetAll(productId);
 
 			foreach (Combo combo in list)
 			{
