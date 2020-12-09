@@ -10,7 +10,7 @@ namespace BLL
 		{
 			foreach (ComboDetails detail in combo.Details)
 			{
-				combo.OriginPrice += detail.Product.Price;
+				combo.OriginPrice += detail.Product.Price * detail.Amount;
 			}
 
 			combo.Price = combo.OriginPrice - (combo.OriginPrice * combo.Discount / 100);
