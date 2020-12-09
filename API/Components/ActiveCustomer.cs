@@ -7,38 +7,38 @@ namespace API.Components
 {
 	public static class ActiveCustomer
 	{
-		private static Dictionary<Person, Timer> tracker = new Dictionary<Person, Timer>();
+		private static Dictionary<int, Timer> tracker = new Dictionary<int, Timer>();
 
-		public static void trackCustomer(Person customer)
+		public static void trackCustomer(int id)
 		{
 			Timer timer = new Timer(5 * 60 * 1000);
 
 			timer.AutoReset = false;
-			timer.Elapsed += (Object o, ElapsedEventArgs e) => untrackCustomer(customer);
-			tracker.Add(customer, timer);
+			timer.Elapsed += (Object o, ElapsedEventArgs e) => untrackCustomer(id);
+			tracker.Add(id, timer);
 			timer.Start();
 		}
 
-		public static void resetInactiveTimeOut(Person customer)
+		public static void resetInactiveTimeOut(int id)
 		{
-			Timer timer = tracker[customer];
+			Timer timer = tracker[id];
 
 			timer.Stop();
 			timer.Start();
 		}
 
-		public static void untrackCustomer(Person customer)
+		public static void untrackCustomer(int id)
 		{
-			Timer timer = tracker[customer];
+			Timer timer = tracker[id];
 
 			timer.Stop();
 			timer.Dispose();
-			tracker.Remove(customer);
+			tracker.Remove(id);
 		}
 
-		public static bool contain(Person customer)
+		public static bool contain(int id)
 		{
-			return tracker.ContainsKey(customer);
+			return tracker.ContainsKey(id);
 		}
 	}
 }

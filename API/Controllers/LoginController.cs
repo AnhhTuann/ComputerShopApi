@@ -21,7 +21,7 @@ namespace API.Controllers
 
 			if (authorizedCustomer != null)
 			{
-				ActiveCustomer.trackCustomer(authorizedCustomer);
+				ActiveCustomer.trackCustomer(authorizedCustomer.Id);
 				Response.Cookies.Append("UserId", authorizedCustomer.Id.ToString());
 				return authorizedCustomer;
 			}
@@ -49,11 +49,10 @@ namespace API.Controllers
 		public ActionResult Logout()
 		{
 			int userId = Int32.Parse(Request.Cookies["UserId"]);
-			Person customer = customerService.GetById(userId);
 
-			if (customer != null && ActiveCustomer.contain(customer))
+			if (ActiveCustomer.contain(userId))
 			{
-				ActiveCustomer.untrackCustomer(customer);
+				ActiveCustomer.untrackCustomer(userId);
 				return Ok();
 			}
 
