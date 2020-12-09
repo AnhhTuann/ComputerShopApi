@@ -31,7 +31,7 @@ namespace API.Controllers
 
 			if (id == -1)
 			{
-				return BadRequest();
+				return Conflict();
 			}
 
 			return id;
