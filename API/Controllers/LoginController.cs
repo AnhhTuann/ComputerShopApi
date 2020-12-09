@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BLL;
 using API.Components;
+using System;
 
 namespace API.Controllers
 {
@@ -41,6 +42,22 @@ namespace API.Controllers
 			}
 
 			return Unauthorized();
+		}
+
+		[HttpPost]
+		[Route("logout")]
+		public ActionResult Logout()
+		{
+			int userId = Int32.Parse(Request.Cookies["UserId"]);
+			Person customer = customerService.GetById(userId);
+
+			if (customer != null && ActiveCustomer.contain(customer))
+			{
+				ActiveCustomer.untrackCustomer(customer);
+				return Ok();
+			}
+
+			return NotFound();
 		}
 	}
 }

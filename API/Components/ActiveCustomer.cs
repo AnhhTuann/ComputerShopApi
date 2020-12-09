@@ -35,5 +35,10 @@ namespace API.Components
 			timer.Dispose();
 			tracker.Remove(customer);
 		}
+
+		public static bool contain(Person customer)
+		{
+			return tracker.ContainsKey(customer);
+		}
 	}
 }
