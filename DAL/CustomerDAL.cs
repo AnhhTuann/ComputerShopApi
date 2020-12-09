@@ -46,7 +46,7 @@ namespace DAL
 		{
 			DAL.ConnectDb();
 
-			Person customer;
+			Person customer = null;
 			string query = "SELECT * FROM customer WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
@@ -57,17 +57,16 @@ namespace DAL
 			while (reader.Read())
 			{
 				customer = extractData(reader);
-				return customer;
 			}
 
-			return null;
+			return customer;
 		}
 
 		public static Person GetByEmail(string email)
 		{
 			DAL.ConnectDb();
 
-			Person customer = new Person();
+			Person customer = null;
 			string query = "SELECT * FROM customer WHERE email = @email";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
@@ -78,10 +77,9 @@ namespace DAL
 			while (reader.Read())
 			{
 				customer = extractData(reader);
-				return customer;
 			}
 
-			return null;
+			return customer;
 		}
 
 		public static int Create(Person customer)

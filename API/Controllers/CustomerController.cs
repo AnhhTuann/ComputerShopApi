@@ -25,9 +25,16 @@ namespace API.Controllers
 		}
 
 		[HttpPost]
-		public int Create(Person customer)
+		public ActionResult<int> Create(Person customer)
 		{
-			return customerService.Create(customer);
+			int id = customerService.Create(customer);
+
+			if (id == -1)
+			{
+				return BadRequest();
+			}
+
+			return id;
 		}
 	}
 }

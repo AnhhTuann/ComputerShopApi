@@ -25,9 +25,16 @@ namespace API.Controllers
 		}
 
 		[HttpPost]
-		public int Create(Staff staff)
+		public ActionResult<int> Create(Staff staff)
 		{
-			return service.Create(staff);
+			int id = service.Create(staff);
+
+			if (id == -1)
+			{
+				return BadRequest();
+			}
+
+			return id;
 		}
 	}
 }

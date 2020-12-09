@@ -49,7 +49,7 @@ namespace DAL
 		{
 			DAL.ConnectDb();
 
-			Staff staff;
+			Staff staff = null;
 			string query = $"SELECT * FROM {table} WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
@@ -60,17 +60,16 @@ namespace DAL
 			while (reader.Read())
 			{
 				staff = extractData(reader);
-				return staff;
 			}
 
-			return null;
+			return staff;
 		}
 
 		public static Staff GetByEmail(string email)
 		{
 			DAL.ConnectDb();
 
-			Staff customer = new Staff();
+			Staff staff = null;
 			string query = $"SELECT * FROM {table} WHERE email = @email";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
@@ -80,11 +79,10 @@ namespace DAL
 
 			while (reader.Read())
 			{
-				customer = extractData(reader);
-				return customer;
+				staff = extractData(reader);
 			}
 
-			return null;
+			return staff;
 		}
 
 		public static int Create(Staff staff)

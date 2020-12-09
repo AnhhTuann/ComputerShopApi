@@ -3,7 +3,6 @@ using DTO;
 using DAL;
 using System.Security.Cryptography;
 using System.Text;
-using System;
 
 namespace BLL
 {
@@ -26,6 +25,11 @@ namespace BLL
 			string hashedPassword = Encoding.ASCII.GetString(hashedBytes);
 
 			staff.Password = hashedPassword;
+
+			if (StaffDAL.GetByEmail(staff.Email) != null)
+			{
+				return -1;
+			}
 
 			return StaffDAL.Create(staff);
 		}

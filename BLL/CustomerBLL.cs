@@ -27,6 +27,11 @@ namespace BLL
 
 			customer.Password = hashedPassword;
 
+			if (CustomerDAL.GetByEmail(customer.Email) != null)
+			{
+				return -1;
+			}
+
 			return CustomerDAL.Create(customer);
 		}
 
