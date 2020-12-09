@@ -10,6 +10,7 @@ namespace API.Controllers
 	public class LoginController : ControllerBase
 	{
 		private CustomerBLL customerService = new CustomerBLL();
+		private StaffBLL staffService = new StaffBLL();
 
 		[HttpPost]
 		[Route("customer")]
@@ -22,6 +23,21 @@ namespace API.Controllers
 				ActiveCustomer.trackCustomer(authorizedCustomer);
 				Response.Cookies.Append("UserId", authorizedCustomer.Id.ToString());
 				return authorizedCustomer;
+			}
+
+			return Unauthorized();
+		}
+
+		[HttpPost]
+		[Route("staff")]
+		public ActionResult<Staff> LoginStaff(Staff staff)
+		{
+			Staff authorizedStaff = staffService.Login(staff);
+
+			if (authorizedStaff != null)
+			{
+				Response.Cookies.Append("StaffId", authorizedStaff.Id.ToString());
+				return authorizedStaff;
 			}
 
 			return Unauthorized();
