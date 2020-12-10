@@ -18,7 +18,7 @@ namespace DAL
 			staff.Password = reader.GetString(3);
 			staff.Address = reader.GetString(4);
 			staff.Phone = reader.GetString(5);
-			staff.Role = reader.GetInt32(6);
+			staff.Role = RoleDAL.GetById(reader.GetInt32(6));
 
 			return staff;
 		}
