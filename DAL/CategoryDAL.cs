@@ -76,6 +76,7 @@ namespace DAL
 			string query = $"UPDATE {table} SET name = @name WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
+			command.Parameters.AddWithValue("@id", category.Id);
 			command.Parameters.AddWithValue("@name", category.Name);
 			command.ExecuteNonQuery();
 		}
