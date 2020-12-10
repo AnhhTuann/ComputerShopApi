@@ -7,9 +7,9 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("/api/[controller]")]
-	public class TicketController : ControllerBase
+	public class ImportController : ControllerBase
 	{
-		private TicketBLL service = new TicketBLL();
+		private ImportBLL service = new ImportBLL();
 
 		[HttpGet]
 		public IEnumerable<Ticket> GetAll([FromQuery] int contain)

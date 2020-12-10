@@ -5,18 +5,17 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-	public class TicketDAL
+	public class ImportDAL
 	{
-		private static string table = "ticket";
-		private static string subTable = "ticketDetails";
+		private static string table = "import";
+		private static string subTable = "importDetails";
 
 		private static Ticket extractData(SQLiteDataReader reader)
 		{
 			Ticket ticket = new Ticket();
 			ticket.Id = reader.GetInt32(0);
 			ticket.Staff = StaffDAL.GetById(reader.GetInt32(1));
-			ticket.IsImport = reader.GetBoolean(2);
-			ticket.Date = reader.GetString(3);
+			ticket.Date = reader.GetString(2);
 
 			string detailsQuery = $"SELECT * FROM {subTable} WHERE ticketId = @ticketId";
 			SQLiteCommand detailsCommand = new SQLiteCommand(detailsQuery, DAL.Conn);
@@ -78,11 +77,10 @@ namespace DAL
 			DAL.ConnectDb();
 
 			string ticketQuery =
-							$"INSERT INTO {table} (staffId, isImport, date) VALUES (@staffId, @isImport, @date)";
+							$"INSERT INTO {table} (staffId, date) VALUES (@staffId, @date)";
 			SQLiteCommand ticketCommand = new SQLiteCommand(ticketQuery, DAL.Conn);
 
 			ticketCommand.Parameters.AddWithValue("@staffId", ticket.Staff.Id);
-			ticketCommand.Parameters.AddWithValue("@isImport", ticket.IsImport);
 			ticketCommand.Parameters.AddWithValue("@date", ticket.Date);
 			ticketCommand.ExecuteNonQuery();
 
@@ -100,7 +98,7 @@ namespace DAL
 
 				Product product = ProductDAL.GetById(detail.Product.Id);
 
-				product.Amount += ticket.IsImport ? detail.Amount : -detail.Amount;
+				product.Amount += detail.Amount;
 				ProductDAL.Update(product);
 			}
 

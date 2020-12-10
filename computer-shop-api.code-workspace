@@ -12,5 +12,8 @@
 		{
 			"path": "API"
 		}
-	]
+	],
+	"settings": {
+		"todo-tree.tree.hideTreeWhenEmpty": false
+	}
 }

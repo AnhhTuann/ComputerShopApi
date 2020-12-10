@@ -6,7 +6,7 @@ namespace BLL
 {
 	public class ComboBLL
 	{
-		private void calculatePrice(Combo combo)
+		public void calculatePrice(Combo combo)
 		{
 			foreach (ComboDetails detail in combo.Details)
 			{
