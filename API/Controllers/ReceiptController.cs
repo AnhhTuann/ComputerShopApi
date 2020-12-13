@@ -38,5 +38,29 @@ namespace API.Controllers
 			receipt.Customer = customer;
 			return receiptService.Create(receipt);
 		}
+
+		[HttpDelete("{id}")]
+		public void Delete(int id)
+		{
+			receiptService.Delete(id);
+		}
+
+		[HttpPut]
+		public ActionResult Update(Receipt receipt)
+		{
+			string staffId = Request.Cookies["StaffId"];
+
+			if (staffId == null)
+			{
+				return Unauthorized();
+			}
+
+			if (receiptService.Update(receipt, Int32.Parse(staffId)))
+			{
+				return Ok();
+			}
+
+			return BadRequest();
+		}
 	}
 }

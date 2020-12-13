@@ -5,17 +5,18 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-	public class ImportDAL
+	public class ExportDAL
 	{
-		private static string table = "import";
-		private static string subTable = "importDetails";
+		private static string table = "export";
+		private static string subTable = "exportDetails";
 
-		private static Import extractData(SQLiteDataReader reader)
+		private static Export extractData(SQLiteDataReader reader)
 		{
-			Import ticket = new Import();
+			Export ticket = new Export();
 			ticket.Id = reader.GetInt32(0);
 			ticket.Staff = StaffDAL.GetById(reader.GetInt32(1));
 			ticket.Date = reader.GetString(2);
+			ticket.Receipt = ReceiptDAL.GetById(reader.GetInt32(3));
 
 			string detailsQuery = $"SELECT * FROM {subTable} WHERE ticketId = @ticketId";
 			SQLiteCommand detailsCommand = new SQLiteCommand(detailsQuery, DAL.Conn);
@@ -42,7 +43,7 @@ namespace DAL
 			return ticket;
 		}
 
-		public static List<Import> GetAll(int productId = 0)
+		public static List<Export> GetAll(int productId = 0)
 		{
 			string productQuery = "";
 
@@ -53,7 +54,7 @@ namespace DAL
 
 			DAL.ConnectDb();
 
-			List<Import> data = new List<Import>();
+			List<Export> data = new List<Export>();
 			string query = $"SELECT * FROM {table} JOIN {subTable} ON {table}.id = {subTable}.ticketId {productQuery} GROUP BY {subTable}.ticketId";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 			SQLiteDataReader reader = command.ExecuteReader();
@@ -72,16 +73,17 @@ namespace DAL
 			return data;
 		}
 
-		public static int Create(Import ticket)
+		public static int Create(Export ticket)
 		{
 			DAL.ConnectDb();
 
 			string ticketQuery =
-							$"INSERT INTO {table} (staffId, date) VALUES (@staffId, @date)";
+							$"INSERT INTO {table} (staffId, date, receiptId) VALUES (@staffId, @date, @receiptId)";
 			SQLiteCommand ticketCommand = new SQLiteCommand(ticketQuery, DAL.Conn);
 
 			ticketCommand.Parameters.AddWithValue("@staffId", ticket.Staff.Id);
 			ticketCommand.Parameters.AddWithValue("@date", ticket.Date);
+			ticketCommand.Parameters.AddWithValue("@receiptId", ticket.Receipt.Id);
 			ticketCommand.ExecuteNonQuery();
 
 			ticket.Id = Convert.ToInt32(DAL.Conn.LastInsertRowId);
@@ -105,11 +107,11 @@ namespace DAL
 			return ticket.Id;
 		}
 
-		public static Import GetById(int id)
+		public static Export GetById(int id)
 		{
 			DAL.ConnectDb();
 
-			Import ticket = null;
+			Export ticket = null;
 			string query = $"SELECT * FROM {table} WHERE id = @id";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 

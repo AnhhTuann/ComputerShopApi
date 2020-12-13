@@ -12,20 +12,20 @@ namespace API.Controllers
 		private ImportBLL service = new ImportBLL();
 
 		[HttpGet]
-		public IEnumerable<Ticket> GetAll([FromQuery] int contain)
+		public IEnumerable<Import> GetAll([FromQuery] int contain)
 		{
 			return service.GetAll(contain);
 		}
 
 		[HttpGet]
 		[Route("{id}")]
-		public Ticket GetById(int id)
+		public Import GetById(int id)
 		{
 			return service.GetById(id);
 		}
 
 		[HttpPost]
-		public int Create(Ticket ticket)
+		public int Create(Import ticket)
 		{
 			return service.Create(ticket);
 		}

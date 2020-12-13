@@ -6,7 +6,7 @@ namespace BLL
 {
 	public class ImportBLL
 	{
-		private void calculate(Ticket ticket)
+		private void calculate(Import ticket)
 		{
 			foreach (TicketDetails detail in ticket.Details)
 			{
@@ -15,11 +15,11 @@ namespace BLL
 			}
 		}
 
-		public List<Ticket> GetAll(int productId)
+		public List<Import> GetAll(int productId)
 		{
-			List<Ticket> list = ImportDAL.GetAll(productId);
+			List<Import> list = ImportDAL.GetAll(productId);
 
-			foreach (Ticket ticket in list)
+			foreach (Import ticket in list)
 			{
 				calculate(ticket);
 			}
@@ -27,14 +27,14 @@ namespace BLL
 			return list;
 		}
 
-		public Ticket GetById(int id)
+		public Import GetById(int id)
 		{
-			Ticket ticket = ImportDAL.GetById(id);
+			Import ticket = ImportDAL.GetById(id);
 			calculate(ticket);
 			return ticket;
 		}
 
-		public int Create(Ticket ticket)
+		public int Create(Import ticket)
 		{
 			return ImportDAL.Create(ticket);
 		}

@@ -92,60 +92,55 @@ namespace DAL
 			return data;
 		}
 
+		private static void InsertDetails(Receipt receipt)
+		{
+			DAL.ConnectDb();
+
+			foreach (ReceiptDetails detail in receipt.Details)
+			{
+				string query = $"INSERT INTO {detailsTable} (receiptId, productId, amount) VALUES (@receiptId, @productId, @amount)";
+				SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+
+				command.Parameters.AddWithValue("@receiptId", receipt.Id);
+				command.Parameters.AddWithValue("@productId", detail.Product.Id);
+				command.Parameters.AddWithValue("@amount", detail.Amount);
+				command.ExecuteNonQuery();
+			}
+
+			foreach (ReceiptCombos detail in receipt.Combos)
+			{
+				string query = $"INSERT INTO {combosTable} (receiptId, comboId, amount) VALUES (@receiptId, @comboId, @amount)";
+				SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+
+				command.Parameters.AddWithValue("@receiptId", receipt.Id);
+				command.Parameters.AddWithValue("@comboId", detail.Combo.Id);
+				command.Parameters.AddWithValue("@amount", detail.Amount);
+				command.ExecuteNonQuery();
+			}
+		}
+
 		public static int Create(Receipt receipt)
 		{
 			DAL.ConnectDb();
-			SQLiteCommand command = new SQLiteCommand(DAL.Conn);
-			SQLiteTransaction transaction = DAL.Conn.BeginTransaction();
-			command.Transaction = transaction;
 
-			try
-			{
-				string query =
-								$"INSERT INTO {table} (recipient, address, phone, status, date, customerId) VALUES (@recipient, @address, @phone, @status, @date, @customerId)";
-				command.CommandText = query;
+			string query =
+							$"INSERT INTO {table} (recipient, address, phone, status, date, customerId) VALUES (@recipient, @address, @phone, @status, @date, @customerId)";
 
-				command.Parameters.AddWithValue("@recipient", receipt.Recipient);
-				command.Parameters.AddWithValue("@address", receipt.Address);
-				command.Parameters.AddWithValue("@phone", receipt.Phone);
-				command.Parameters.AddWithValue("@status", receipt.Status);
-				command.Parameters.AddWithValue("@date", receipt.Date);
-				command.Parameters.AddWithValue("@customerId", receipt.Customer.Id);
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
-				command.ExecuteNonQuery();
+			command.Parameters.AddWithValue("@recipient", receipt.Recipient);
+			command.Parameters.AddWithValue("@address", receipt.Address);
+			command.Parameters.AddWithValue("@phone", receipt.Phone);
+			command.Parameters.AddWithValue("@status", receipt.Status);
+			command.Parameters.AddWithValue("@date", receipt.Date);
+			command.Parameters.AddWithValue("@customerId", receipt.Customer.Id);
+			command.ExecuteNonQuery();
 
-				receipt.Id = Convert.ToInt32(DAL.Conn.LastInsertRowId);
+			receipt.Id = Convert.ToInt32(DAL.Conn.LastInsertRowId);
 
-				foreach (ReceiptDetails detail in receipt.Details)
-				{
-					query = $"INSERT INTO {detailsTable} (receiptId, productId, amount) VALUES (@receiptId, @productId, @amount)";
-					command.CommandText = query;
+			InsertDetails(receipt);
 
-					command.Parameters.AddWithValue("@receiptId", receipt.Id);
-					command.Parameters.AddWithValue("@productId", detail.Product.Id);
-					command.Parameters.AddWithValue("@amount", detail.Amount);
-					command.ExecuteNonQuery();
-				}
-
-				foreach (ReceiptCombos detail in receipt.Combos)
-				{
-					query = $"INSERT INTO {combosTable} (receiptId, comboId, amount) VALUES (@receiptId, @comboId, @amount)";
-					command.CommandText = query;
-
-					command.Parameters.AddWithValue("@receiptId", receipt.Id);
-					command.Parameters.AddWithValue("@comboId", detail.Combo.Id);
-					command.Parameters.AddWithValue("@amount", detail.Amount);
-					command.ExecuteNonQuery();
-				}
-
-				transaction.Commit();
-				return receipt.Id;
-			}
-			catch (Exception e)
-			{
-				transaction.Rollback();
-				throw e;
-			}
+			return receipt.Id;
 		}
 
 		public static Receipt GetById(int id)
@@ -167,6 +162,88 @@ namespace DAL
 
 
 			return combo;
+		}
+
+		public static void CreateExportTicket(Receipt receipt, int staffId)
+		{
+			Export ticket = new Export();
+			ticket.Staff = StaffDAL.GetById(staffId);
+
+			foreach (ReceiptDetails detail in receipt.Details)
+			{
+				TicketDetails ticketDetails = new TicketDetails()
+				{
+					Ticket = ticket,
+					Product = detail.Product,
+					Amount = detail.Amount
+				};
+
+				ticket.Details.Add(ticketDetails);
+			}
+
+			foreach (ReceiptCombos detail in receipt.Combos)
+			{
+				foreach (ComboDetails comboDetails in detail.Combo.Details)
+				{
+					TicketDetails ticketDetails = new TicketDetails()
+					{
+						Ticket = ticket,
+						Product = comboDetails.Product,
+						Amount = comboDetails.Amount
+					};
+
+					ticket.Details.Add(ticketDetails);
+				}
+			}
+
+			ExportDAL.Create(ticket);
+		}
+
+		public static bool Update(Receipt receipt)
+		{
+			if (receipt.Status != 0)
+			{
+				return false;
+			}
+
+			DAL.ConnectDb();
+
+			string query =
+							$"UPDATE {table} SET recipient = @recipient, address = @address, phone = @phone, status = @status, date = @date, customerId = @customerId WHERE id = @id";
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+
+			command.Parameters.AddWithValue("@recipient", receipt.Recipient);
+			command.Parameters.AddWithValue("@address", receipt.Address);
+			command.Parameters.AddWithValue("@phone", receipt.Phone);
+			command.Parameters.AddWithValue("@status", receipt.Status);
+			command.Parameters.AddWithValue("@date", receipt.Date);
+			command.Parameters.AddWithValue("@customerId", receipt.Customer.Id);
+			command.Parameters.AddWithValue("@id", receipt.Id);
+			command.ExecuteNonQuery();
+
+			String deleteDetailsQuery = $"DELETE FROM {detailsTable} WHERE receiptId = @id";
+			SQLiteCommand deleteDetailsCommand = new SQLiteCommand(deleteDetailsQuery, DAL.Conn);
+			deleteDetailsCommand.Parameters.AddWithValue("@id", receipt.Id);
+			deleteDetailsCommand.ExecuteNonQuery();
+
+			String deleteCombosQuery = $"DELETE FROM {combosTable} WHERE receiptId = @id";
+			SQLiteCommand deleteCombosCommand = new SQLiteCommand(deleteCombosQuery, DAL.Conn);
+			deleteCombosCommand.Parameters.AddWithValue("@id", receipt.Id);
+			deleteCombosCommand.ExecuteNonQuery();
+
+			InsertDetails(receipt);
+			return true;
+		}
+
+		public static void Delete(int id)
+		{
+			DAL.ConnectDb();
+
+			string query = $"DELETE FROM {table} WHERE id = @id";
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+
+			command.Parameters.AddWithValue("@id", id);
+			command.ExecuteNonQuery();
 		}
 	}
 }

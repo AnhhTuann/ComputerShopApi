@@ -72,44 +72,39 @@ namespace DAL
 			return data;
 		}
 
+		private static void InserDetails(Combo combo)
+		{
+			DAL.ConnectDb();
+
+			foreach (ComboDetails detail in combo.Details)
+			{
+				string query = $"INSERT INTO {subTable} (comboId, productId, amount) VALUES (@comboId, @productId, @amount)";
+				SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+
+				command.Parameters.AddWithValue("@comboId", combo.Id);
+				command.Parameters.AddWithValue("@productId", detail.Product.Id);
+				command.Parameters.AddWithValue("@amount", detail.Amount);
+				command.ExecuteNonQuery();
+			}
+		}
+
 		public static int Create(Combo combo)
 		{
 			DAL.ConnectDb();
-			SQLiteCommand command = new SQLiteCommand(DAL.Conn);
-			SQLiteTransaction transaction = DAL.Conn.BeginTransaction();
-			command.Transaction = transaction;
 
-			try
-			{
-				string query =
-								$"INSERT INTO {table} (name, discount) VALUES (@name, @discount)";
-				command.CommandText = query;
+			string query =
+							$"INSERT INTO {table} (name, discount) VALUES (@name, @discount)";
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
-				command.Parameters.AddWithValue("@name", combo.Name);
-				command.Parameters.AddWithValue("@discount", combo.Discount);
-				command.ExecuteNonQuery();
+			command.Parameters.AddWithValue("@name", combo.Name);
+			command.Parameters.AddWithValue("@discount", combo.Discount);
+			command.ExecuteNonQuery();
 
-				combo.Id = Convert.ToInt32(DAL.Conn.LastInsertRowId);
+			combo.Id = Convert.ToInt32(DAL.Conn.LastInsertRowId);
 
-				foreach (ComboDetails detail in combo.Details)
-				{
-					query = $"INSERT INTO {subTable} (comboId, productId, amount) VALUES (@comboId, @productId, @amount)";
-					command.CommandText = query;
+			InserDetails(combo);
 
-					command.Parameters.AddWithValue("@comboId", combo.Id);
-					command.Parameters.AddWithValue("@productId", detail.Product.Id);
-					command.Parameters.AddWithValue("@amount", detail.Amount);
-					command.ExecuteNonQuery();
-				}
-
-				transaction.Commit();
-				return combo.Id;
-			}
-			catch (Exception e)
-			{
-				transaction.Rollback();
-				throw e;
-			}
+			return combo.Id;
 		}
 
 		public static Combo GetById(int id)
@@ -136,42 +131,21 @@ namespace DAL
 		public static void Update(Combo combo)
 		{
 			DAL.ConnectDb();
-			SQLiteCommand command = new SQLiteCommand(DAL.Conn);
-			SQLiteTransaction transaction = DAL.Conn.BeginTransaction();
-			command.Transaction = transaction;
+			string query =
+							$"UPDATE {table} SET name = @name, discount = @discount WHERE id = @id";
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 
-			try
-			{
-				string query =
-								$"UPDATE {table} SET name = @name, discount = @discount WHERE id = @id";
-				command.CommandText = query;
+			command.Parameters.AddWithValue("@name", combo.Name);
+			command.Parameters.AddWithValue("@discount", combo.Discount);
+			command.Parameters.AddWithValue("@id", combo.Id);
+			command.ExecuteNonQuery();
 
-				command.Parameters.AddWithValue("@name", combo.Name);
-				command.Parameters.AddWithValue("@discount", combo.Discount);
-				command.Parameters.AddWithValue("@id", combo.Id);
-				command.ExecuteNonQuery();
+			string deleteQuery = $"DELETE FROM {subTable} WHERE comboId = @id";
+			SQLiteCommand deleteCommand = new SQLiteCommand(deleteQuery, DAL.Conn);
+			deleteCommand.Parameters.AddWithValue("@id", combo.Id);
+			deleteCommand.ExecuteNonQuery();
 
-				query = $"DELETE FROM {subTable} WHERE comboId = @id";
-				command.ExecuteNonQuery();
-
-				foreach (ComboDetails detail in combo.Details)
-				{
-					query = $"INSERT INTO {subTable} (comboId, productId, amount) VALUES (@comboId, @productId, @amount)";
-					command.CommandText = query;
-
-					command.Parameters.AddWithValue("@comboId", combo.Id);
-					command.Parameters.AddWithValue("@productId", detail.Product.Id);
-					command.Parameters.AddWithValue("@amount", detail.Amount);
-					command.ExecuteNonQuery();
-				}
-
-				transaction.Commit();
-			}
-			catch (Exception e)
-			{
-				transaction.Rollback();
-				throw e;
-			}
+			InserDetails(combo);
 		}
 
 		public static void Delete(int id)
