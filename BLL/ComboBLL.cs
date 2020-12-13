@@ -39,5 +39,15 @@ namespace BLL
 		{
 			return ComboDAL.Create(combo);
 		}
+
+		public void Update(Combo combo)
+		{
+			ComboDAL.Update(combo);
+		}
+
+		public void Delete(int id)
+		{
+			ComboDAL.Delete(id);
+		}
 	}
 }

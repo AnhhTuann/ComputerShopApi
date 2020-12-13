@@ -132,5 +132,57 @@ namespace DAL
 
 			return combo;
 		}
+
+		public static void Update(Combo combo)
+		{
+			DAL.ConnectDb();
+			SQLiteCommand command = new SQLiteCommand(DAL.Conn);
+			SQLiteTransaction transaction = DAL.Conn.BeginTransaction();
+			command.Transaction = transaction;
+
+			try
+			{
+				string query =
+								$"UPDATE {table} SET name = @name, discount = @discount WHERE id = @id";
+				command.CommandText = query;
+
+				command.Parameters.AddWithValue("@name", combo.Name);
+				command.Parameters.AddWithValue("@discount", combo.Discount);
+				command.Parameters.AddWithValue("@id", combo.Id);
+				command.ExecuteNonQuery();
+
+				query = $"DELETE FROM {subTable} WHERE comboId = @id";
+				command.ExecuteNonQuery();
+
+				foreach (ComboDetails detail in combo.Details)
+				{
+					query = $"INSERT INTO {subTable} (comboId, productId, amount) VALUES (@comboId, @productId, @amount)";
+					command.CommandText = query;
+
+					command.Parameters.AddWithValue("@comboId", combo.Id);
+					command.Parameters.AddWithValue("@productId", detail.Product.Id);
+					command.Parameters.AddWithValue("@amount", detail.Amount);
+					command.ExecuteNonQuery();
+				}
+
+				transaction.Commit();
+			}
+			catch (Exception e)
+			{
+				transaction.Rollback();
+				throw e;
+			}
+		}
+
+		public static void Delete(int id)
+		{
+			DAL.ConnectDb();
+
+			string query = $"DELETE FROM {table} WHERE id = @id";
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+
+			command.Parameters.AddWithValue("@id", id);
+			command.ExecuteNonQuery();
+		}
 	}
 }

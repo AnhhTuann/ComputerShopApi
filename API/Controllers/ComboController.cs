@@ -17,8 +17,7 @@ namespace API.Controllers
 			return service.GetAll(contain);
 		}
 
-		[HttpGet]
-		[Route("{id}")]
+		[HttpGet("{id}")]
 		public Combo GetById(int id)
 		{
 			return service.GetById(id);
@@ -28,6 +27,18 @@ namespace API.Controllers
 		public int Create(Combo combo)
 		{
 			return service.Create(combo);
+		}
+
+		[HttpPut]
+		public void Update(Combo combo)
+		{
+			service.Update(combo);
+		}
+
+		[HttpDelete("{id}")]
+		public void Delete(int id)
+		{
+			service.Delete(id);
 		}
 	}
 }
