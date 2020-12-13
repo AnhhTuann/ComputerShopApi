@@ -100,7 +100,7 @@ namespace DAL
 
 				Product product = ProductDAL.GetById(detail.Product.Id);
 
-				product.Amount += detail.Amount;
+				product.Amount -= detail.Amount;
 				ProductDAL.Update(product);
 			}
 
