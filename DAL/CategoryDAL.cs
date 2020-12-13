@@ -80,5 +80,16 @@ namespace DAL
 			command.Parameters.AddWithValue("@name", category.Name);
 			command.ExecuteNonQuery();
 		}
+
+		public static void Delete(int id)
+		{
+			DAL.ConnectDb();
+
+			string query = $"DELETE FROM {table} WHERE id = @id";
+			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
+
+			command.Parameters.AddWithValue("@id", id);
+			command.ExecuteNonQuery();
+		}
 	}
 }
