@@ -49,5 +49,11 @@ namespace API.Controllers
 		{
 			productService.Update(product);
 		}
+
+		[HttpDelete("{id}")]
+		public void Delete(int id)
+		{
+			productService.Delete(id);
+		}
 	}
 }

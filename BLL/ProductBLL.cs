@@ -25,5 +25,10 @@ namespace BLL
 		{
 			ProductDAL.Update(product);
 		}
+
+		public void Delete(int id)
+		{
+			CategoryDAL.Delete(id);
+		}
 	}
 }
