@@ -69,12 +69,18 @@ namespace DAL
 			return receipt;
 		}
 
-		public static List<Receipt> GetAll()
+		public static List<Receipt> GetAll(int customerId = 0)
 		{
 			DAL.ConnectDb();
+			string byCustomer = "";
+
+			if (customerId != 0)
+			{
+				byCustomer = " WHERE customerId = " + customerId;
+			}
 
 			List<Receipt> data = new List<Receipt>();
-			string query = $"SELECT * FROM {table}";
+			string query = $"SELECT * FROM {table} {byCustomer}";
 			SQLiteCommand command = new SQLiteCommand(query, DAL.Conn);
 			SQLiteDataReader reader = command.ExecuteReader();
 

@@ -15,9 +15,9 @@ namespace API.Controllers
 		private CustomerBLL customerService = new CustomerBLL();
 
 		[HttpGet]
-		public IEnumerable<Receipt> GetAll()
+		public IEnumerable<Receipt> GetAll([FromQuery] int customerId)
 		{
-			return receiptService.GetAll();
+			return receiptService.GetAll(customerId);
 		}
 
 		[HttpGet]

@@ -22,9 +22,9 @@ namespace BLL
 			}
 		}
 
-		public List<Receipt> GetAll()
+		public List<Receipt> GetAll(int customerId)
 		{
-			List<Receipt> list = ReceiptDAL.GetAll();
+			List<Receipt> list = ReceiptDAL.GetAll(customerId);
 
 			foreach (Receipt receipt in list)
 			{
