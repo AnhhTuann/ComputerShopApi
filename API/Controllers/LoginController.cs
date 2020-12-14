@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BLL;
-using API.Components;
 using System;
 
 namespace API.Controllers
@@ -21,7 +20,6 @@ namespace API.Controllers
 
 			if (authorizedCustomer != null)
 			{
-				ActiveCustomer.trackCustomer(authorizedCustomer.Id);
 				Response.Cookies.Append("UserId", authorizedCustomer.Id.ToString());
 				return authorizedCustomer;
 			}
@@ -42,21 +40,6 @@ namespace API.Controllers
 			}
 
 			return Unauthorized();
-		}
-
-		[HttpPost]
-		[Route("logout")]
-		public ActionResult Logout()
-		{
-			int userId = Int32.Parse(Request.Cookies["UserId"]);
-
-			if (ActiveCustomer.contain(userId))
-			{
-				ActiveCustomer.untrackCustomer(userId);
-				return Ok();
-			}
-
-			return NotFound();
 		}
 	}
 }

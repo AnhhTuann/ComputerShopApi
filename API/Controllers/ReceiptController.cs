@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BLL;
 using System;
-using API.Components;
 
 namespace API.Controllers
 {
@@ -32,7 +31,7 @@ namespace API.Controllers
 		{
 			string userId = Request.Cookies["UserId"];
 
-			if (userId == null || !ActiveCustomer.contain(Int32.Parse(userId))) return Unauthorized();
+			if (userId == null) return Unauthorized();
 
 			Person customer = customerService.GetById(Int32.Parse(userId));
 			receipt.Customer = customer;
