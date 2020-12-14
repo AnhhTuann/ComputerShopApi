@@ -49,13 +49,14 @@ namespace API.Controllers
 		public ActionResult Update(Receipt receipt)
 		{
 			string staffId = Request.Cookies["StaffId"];
+			string customerId = Request.Cookies["UserId"];
 
-			if (staffId == null)
+			if (staffId == null && customerId == null)
 			{
 				return Unauthorized();
 			}
 
-			if (receiptService.Update(receipt, Int32.Parse(staffId)))
+			if ((staffId != null && receiptService.Update(receipt, Int32.Parse(staffId))) || (customerId != null && receiptService.Update(receipt)))
 			{
 				return Ok();
 			}

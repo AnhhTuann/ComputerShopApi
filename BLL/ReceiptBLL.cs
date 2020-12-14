@@ -57,6 +57,16 @@ namespace BLL
 			return false;
 		}
 
+		public bool Update(Receipt receipt)
+		{
+			if (receipt.Status == 1 || !ReceiptDAL.Update(receipt))
+			{
+				return false;
+			}
+
+			return true;
+		}
+
 		public void Delete(int id)
 		{
 			ReceiptDAL.Delete(id);
