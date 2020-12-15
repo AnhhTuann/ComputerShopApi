@@ -51,25 +51,18 @@ namespace BLL
 			return ReceiptDAL.Create(receipt);
 		}
 
-		public bool Update(Receipt receipt, int staffId)
+		public void Update(Receipt receipt, int staffId)
 		{
-			if (ReceiptDAL.Update(receipt) && receipt.Status == 1)
+			ReceiptDAL.Update(receipt);
+			if (receipt.Status == 1)
 			{
 				ReceiptDAL.CreateExportTicket(receipt, staffId);
-				return true;
 			}
-
-			return false;
 		}
 
-		public bool Update(Receipt receipt)
+		public void Update(Receipt receipt)
 		{
-			if (receipt.Status == 1 || !ReceiptDAL.Update(receipt))
-			{
-				return false;
-			}
-
-			return true;
+			ReceiptDAL.Update(receipt);
 		}
 
 		public void Delete(int id)

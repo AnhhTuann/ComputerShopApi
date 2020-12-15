@@ -205,7 +205,7 @@ namespace DAL
 			ExportDAL.Create(ticket);
 		}
 
-		public static bool Update(Receipt receipt)
+		public static void Update(Receipt receipt)
 		{
 			DAL.ConnectDb();
 
@@ -233,7 +233,6 @@ namespace DAL
 			deleteCombosCommand.ExecuteNonQuery();
 
 			InsertDetails(receipt);
-			return true;
 		}
 
 		public static void Delete(int id)

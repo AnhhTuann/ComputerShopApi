@@ -55,22 +55,25 @@ namespace API.Controllers
 		}
 
 		[HttpPut]
-		public ActionResult Update(Receipt receipt)
+		public ActionResult Update(Receipt receipt, [FromQuery] int staffId = 0)
 		{
-			string staffId = Request.Cookies["StaffId"];
 			string customerId = Request.Cookies["UserId"];
 
-			if (staffId == null && customerId == null)
+			if (staffId == 0 && customerId == null)
 			{
 				return Unauthorized();
 			}
 
-			if ((staffId != null && receiptService.Update(receipt, Int32.Parse(staffId))) || (customerId != null && receiptService.Update(receipt)))
+			if (staffId != 0)
 			{
-				return Ok();
+				receiptService.Update(receipt, staffId);
+			}
+			else if (customerId != null)
+			{
+				receiptService.Update(receipt);
 			}
 
-			return BadRequest();
+			return Ok();
 		}
 	}
 }
