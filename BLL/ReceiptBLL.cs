@@ -22,9 +22,9 @@ namespace BLL
 			}
 		}
 
-		public List<Receipt> GetAll()
+		public List<Receipt> GetAll(int customerId)
 		{
-			List<Receipt> list = ReceiptDAL.GetAll();
+			List<Receipt> list = ReceiptDAL.GetAll(customerId);
 
 			foreach (Receipt receipt in list)
 			{
@@ -60,6 +60,16 @@ namespace BLL
 			}
 
 			return false;
+		}
+
+		public bool Update(Receipt receipt)
+		{
+			if (receipt.Status == 1 || !ReceiptDAL.Update(receipt))
+			{
+				return false;
+			}
+
+			return true;
 		}
 
 		public void Delete(int id)

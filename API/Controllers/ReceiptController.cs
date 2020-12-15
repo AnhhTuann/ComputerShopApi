@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BLL;
 using System;
-using API.Components;
 
 namespace API.Controllers
 {
@@ -15,9 +14,9 @@ namespace API.Controllers
 		private CustomerBLL customerService = new CustomerBLL();
 
 		[HttpGet]
-		public IEnumerable<Receipt> GetAll()
+		public IEnumerable<Receipt> GetAll([FromQuery] int customerId)
 		{
-			return receiptService.GetAll();
+			return receiptService.GetAll(customerId);
 		}
 
 		[HttpGet]
@@ -39,7 +38,7 @@ namespace API.Controllers
 		{
 			string userId = Request.Cookies["UserId"];
 
-			if (userId == null || !ActiveCustomer.contain(Int32.Parse(userId))) return Unauthorized();
+			if (userId == null) return Unauthorized();
 
 			Person customer = customerService.GetById(Int32.Parse(userId));
 			receipt.Customer = customer;
@@ -56,13 +55,14 @@ namespace API.Controllers
 		public ActionResult Update(Receipt receipt)
 		{
 			string staffId = Request.Cookies["StaffId"];
+			string customerId = Request.Cookies["UserId"];
 
-			if (staffId == null)
+			if (staffId == null && customerId == null)
 			{
 				return Unauthorized();
 			}
 
-			if (receiptService.Update(receipt, Int32.Parse(staffId)))
+			if ((staffId != null && receiptService.Update(receipt, Int32.Parse(staffId))) || (customerId != null && receiptService.Update(receipt)))
 			{
 				return Ok();
 			}
