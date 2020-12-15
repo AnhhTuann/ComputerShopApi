@@ -173,6 +173,7 @@ namespace DAL
 		public static void CreateExportTicket(Receipt receipt, int staffId)
 		{
 			Export ticket = new Export();
+			ticket.Receipt = receipt;
 			ticket.Staff = StaffDAL.GetById(staffId);
 
 			foreach (ReceiptDetails detail in receipt.Details)
