@@ -22,9 +22,16 @@ namespace API.Controllers
 
 		[HttpGet]
 		[Route("{id}")]
-		public Receipt GetById(int id)
+		public ActionResult<Receipt> GetById(int id)
 		{
-			return receiptService.GetById(id);
+			Receipt receipt = receiptService.GetById(id);
+
+			if (receipt == null)
+			{
+				return NotFound();
+			}
+
+			return receipt;
 		}
 
 		[HttpPost]

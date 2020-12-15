@@ -37,7 +37,12 @@ namespace BLL
 		public Receipt GetById(int id)
 		{
 			Receipt receipt = ReceiptDAL.GetById(id);
-			calculatePrice(receipt);
+
+			if (receipt != null)
+			{
+				calculatePrice(receipt);
+			}
+
 			return receipt;
 		}
 
