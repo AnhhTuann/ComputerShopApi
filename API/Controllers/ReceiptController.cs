@@ -36,12 +36,15 @@ namespace API.Controllers
 		[HttpPost]
 		public ActionResult<int> Create(Receipt receipt)
 		{
-			string userId = Request.Cookies["UserId"];
+			if (receipt.Customer == null)
+			{
+				receipt.Customer = new Person();
+				string userId = Request.Cookies["UserId"];
 
-			if (userId == null) return Unauthorized();
+				if (userId == null) return Unauthorized();
+				else receipt.Customer.Id = Int32.Parse(userId);
+			}
 
-			Person customer = customerService.GetById(Int32.Parse(userId));
-			receipt.Customer = customer;
 			return receiptService.Create(receipt);
 		}
 
