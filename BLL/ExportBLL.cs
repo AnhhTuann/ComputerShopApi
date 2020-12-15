@@ -17,10 +17,12 @@ namespace BLL
 		public List<Export> GetAll(int productId)
 		{
 			List<Export> list = ExportDAL.GetAll(productId);
+			ReceiptBLL receiptService = new ReceiptBLL();
 
 			foreach (Export ticket in list)
 			{
 				calculate(ticket);
+				receiptService.calculatePrice(ticket.Receipt);
 			}
 
 			return list;

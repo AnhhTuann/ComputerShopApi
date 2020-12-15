@@ -6,7 +6,7 @@ namespace BLL
 {
 	public class ReceiptBLL
 	{
-		private void calculatePrice(Receipt receipt)
+		public void calculatePrice(Receipt receipt)
 		{
 			ComboBLL comboService = new ComboBLL();
 			foreach (ReceiptDetails detail in receipt.Details)
