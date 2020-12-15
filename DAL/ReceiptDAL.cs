@@ -207,11 +207,6 @@ namespace DAL
 
 		public static bool Update(Receipt receipt)
 		{
-			if (receipt.Status != 0)
-			{
-				return false;
-			}
-
 			DAL.ConnectDb();
 
 			string query =
