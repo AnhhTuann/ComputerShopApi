@@ -36,5 +36,11 @@ namespace API.Controllers
 
 			return id;
 		}
+
+		[HttpPut]
+		public void Update(Person customer)
+		{
+			customerService.Update(customer);
+		}
 	}
 }
