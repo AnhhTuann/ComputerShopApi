@@ -98,6 +98,37 @@ namespace DAL
 			return data;
 		}
 
+		private static bool CheckAmount(Receipt receipt)
+		{
+			foreach (ReceiptDetails detail in receipt.Details)
+			{
+				Product p = ProductDAL.GetById(detail.Product.Id);
+
+				if (p == null)
+				{
+					return false;
+				}
+
+				if (p.Amount < detail.Amount)
+				{
+					return false;
+				}
+			}
+
+			foreach (ReceiptCombos detail in receipt.Combos)
+			{
+				foreach (ComboDetails comboDetails in detail.Combo.Details)
+				{
+					if (comboDetails.Product.Amount < comboDetails.Amount * detail.Amount)
+					{
+						return false;
+					}
+				}
+			}
+
+			return true;
+		}
+
 		private static void InsertDetails(Receipt receipt)
 		{
 			DAL.ConnectDb();
@@ -128,6 +159,11 @@ namespace DAL
 		public static int Create(Receipt receipt)
 		{
 			DAL.ConnectDb();
+
+			if (!CheckAmount(receipt))
+			{
+				return -1;
+			}
 
 			string query =
 							$"INSERT INTO {table} (recipient, address, phone, status, date, customerId) VALUES (@recipient, @address, @phone, @status, @date, @customerId)";

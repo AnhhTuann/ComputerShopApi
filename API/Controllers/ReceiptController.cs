@@ -45,7 +45,14 @@ namespace API.Controllers
 				else receipt.Customer.Id = Int32.Parse(userId);
 			}
 
-			return receiptService.Create(receipt);
+			int receiptId = receiptService.Create(receipt);
+
+			if (receiptId == -1)
+			{
+				return BadRequest();
+			}
+
+			return receiptId;
 		}
 
 		[HttpDelete("{id}")]
