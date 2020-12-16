@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using DTO;
 using BLL;
+using API.Models;
+using System;
 
 namespace API.Controllers
 {
@@ -45,9 +47,10 @@ namespace API.Controllers
 
 		[HttpPut]
 		[Route("password")]
-		public ActionResult ChangePassword([FromBody] int customerId, [FromBody] string oldPassword, [FromBody] string newPassword)
+		public ActionResult ChangePassword(ChangePasswordInfo info)
 		{
-			if (customerService.ChagePassword(customerId, oldPassword, newPassword))
+			string customerId = Request.Cookies["UserId"];
+			if (customerService.ChagePassword(Int32.Parse(customerId), info.OldPassword, info.NewPassword))
 			{
 				return Ok();
 			}

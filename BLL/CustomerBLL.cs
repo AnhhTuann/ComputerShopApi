@@ -3,7 +3,6 @@ using DTO;
 using DAL;
 using System.Security.Cryptography;
 using System.Text;
-using System;
 
 namespace BLL
 {
@@ -65,7 +64,7 @@ namespace BLL
 			if (hashedPassword == customer.Password)
 			{
 				byte[] newHashedBytes = md5.ComputeHash(Encoding.ASCII.GetBytes(newPassword));
-				string newHashedPassword = Encoding.ASCII.GetString(hashedBytes);
+				string newHashedPassword = Encoding.ASCII.GetString(newHashedBytes);
 				customer.Password = newHashedPassword;
 				CustomerDAL.Update(customer);
 				return true;
