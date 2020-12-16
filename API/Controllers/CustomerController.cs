@@ -44,6 +44,7 @@ namespace API.Controllers
 		}
 
 		[HttpPut]
+		[Route("password")]
 		public ActionResult ChangePassword([FromBody] int customerId, [FromBody] string oldPassword, [FromBody] string newPassword)
 		{
 			if (customerService.ChagePassword(customerId, oldPassword, newPassword))
