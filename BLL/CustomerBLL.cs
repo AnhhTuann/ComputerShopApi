@@ -51,6 +51,8 @@ namespace BLL
 
 		public void Update(Person customer)
 		{
+			Person oldCustomer = CustomerDAL.GetById(customer.Id);
+			customer.Password = oldCustomer.Password;
 			CustomerDAL.Update(customer);
 		}
 	}
