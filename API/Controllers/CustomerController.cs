@@ -42,5 +42,16 @@ namespace API.Controllers
 		{
 			customerService.Update(customer);
 		}
+
+		[HttpPut]
+		public ActionResult ChangePassword([FromBody] int customerId, [FromBody] string oldPassword, [FromBody] string newPassword)
+		{
+			if (customerService.ChagePassword(customerId, oldPassword, newPassword))
+			{
+				return Ok();
+			}
+
+			return Unauthorized();
+		}
 	}
 }

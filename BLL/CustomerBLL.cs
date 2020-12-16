@@ -55,5 +55,23 @@ namespace BLL
 			customer.Password = oldCustomer.Password;
 			CustomerDAL.Update(customer);
 		}
+
+		public bool ChagePassword(int id, string oldPassword, string newPassword)
+		{
+			Person customer = CustomerDAL.GetById(id);
+			byte[] hashedBytes = md5.ComputeHash(Encoding.ASCII.GetBytes(oldPassword));
+			string hashedPassword = Encoding.ASCII.GetString(hashedBytes);
+
+			if (hashedPassword == customer.Password)
+			{
+				byte[] newHashedBytes = md5.ComputeHash(Encoding.ASCII.GetBytes(newPassword));
+				string newHashedPassword = Encoding.ASCII.GetString(hashedBytes);
+				customer.Password = newHashedPassword;
+				CustomerDAL.Update(customer);
+				return true;
+			}
+
+			return false;
+		}
 	}
 }
